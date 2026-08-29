@@ -1,0 +1,19 @@
+{
+  "name": "Golf Club Guide",
+  "short_name": "Golf Guide",
+  "description": "Find the right golf club by distance — beginner friendly",
+  "start_url": "/golf-club-guide/",
+  "scope": "/golf-club-guide/",
+  "display": "standalone",
+  "background_color": "#14472d",
+  "theme_color": "#1a5c38",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
