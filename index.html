@@ -451,32 +451,6 @@ function stanceFeet(sw) {
     return [88, 172]; // narrow
 }
 
-/* ── Top-down stance diagram ── */
-function stanceSVG(ballPos, stanceWidth) {
-    const [lx, rx] = stanceFeet(stanceWidth);
-    const bx = Math.round(lx + ballPos * (rx - lx));
-    const cy = 126, cx = 130;
-
-    return `<svg viewBox="0 0 260 182" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="tarr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-      <polygon points="0 0,8 3,0 6" fill="#1a5c38"/>
-    </marker>
-  </defs>
-  <line x1="${cx}" y1="72" x2="${cx}" y2="18" stroke="#1a5c38" stroke-width="2.5" marker-end="url(#tarr)"/>
-  <text x="${cx}" y="13" text-anchor="middle" font-size="12" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">TARGET</text>
-  <line x1="18" y1="${cy}" x2="242" y2="${cy}" stroke="#d0d0d0" stroke-width="1.5" stroke-dasharray="5,4"/>
-  <ellipse cx="${lx}" cy="${cy}" rx="24" ry="12" fill="#5D4037" opacity="0.88"/>
-  <text x="${lx}" y="${cy+26}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">FRONT</text>
-  <ellipse cx="${rx}" cy="${cy}" rx="24" ry="12" fill="#5D4037" opacity="0.88"/>
-  <text x="${rx}" y="${cy+26}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">BACK</text>
-  <line x1="${bx}" y1="${cy-24}" x2="${bx}" y2="${cy-15}" stroke="#888" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <circle cx="${bx}" cy="${cy-34}" r="13" fill="white" stroke="#222" stroke-width="2.5"/>
-  <circle cx="${bx}" cy="${cy-34}" r="4" fill="#bbb"/>
-  <text x="${bx}" y="${cy-52}" text-anchor="middle" font-size="11" fill="#333" font-family="-apple-system,sans-serif" font-weight="700">BALL</text>
-</svg>`;
-}
-
 /* ── Setup-at-a-glance infographic ── */
 function setupSVG(ballPos, ballPosLabel, stanceWidth, weight, weightLabel) {
     const [lx, rx] = stanceFeet(stanceWidth);
@@ -563,10 +537,6 @@ function findClub() {
             <div class="club-distance-label">${val} yds &rarr; ${rangeLabel}</div>
             <div class="club-name">${club.name}</div>
             <div class="swing-badge">${club.swingType}</div>
-        </div>
-        <div class="panel">
-            <div class="panel-title">Stance &amp; Ball Position &mdash; Top View</div>
-            <div class="svg-wrap">${stanceSVG(club.ballPos, club.stanceWidth)}</div>
         </div>
         <div class="panel">
             <div class="panel-title">Setup at a Glance</div>
