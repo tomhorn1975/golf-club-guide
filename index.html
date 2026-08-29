@@ -163,7 +163,7 @@
         .svg-wrap {
             background: #f5fbf7;
             border-radius: 14px;
-            padding: 10px 6px;
+            padding: 14px 10px;
         }
         .svg-wrap svg { width: 100%; height: auto; display: block; }
 
@@ -223,36 +223,45 @@ const clubs = [
         name: "Driver",
         range: [180, 300],
         ballPos: 0.12,
+        ballPosLabel: "Forward — off front heel",
         stanceWidth: "wide",
+        weight: 0.35,
+        weightLabel: "60% back foot",
         swingType: "Full Swing",
         color: "#0d3b6e",
         tips: [
             "Tee the ball high — half the ball above the clubface",
             "Weight slightly on your back foot at address",
-            "Sweep UP through the ball, don't hit down",
+            "Sweep UP through the ball — don't hit down",
             "Keep your head behind the ball through impact",
-            "Only used off a tee — not from the fairway"
+            "Only used off a tee — never from the fairway"
         ]
     },
     {
         name: "3-Wood",
         range: [160, 179],
         ballPos: 0.18,
+        ballPosLabel: "Forward in stance",
         stanceWidth: "wide",
+        weight: 0.45,
+        weightLabel: "Even, slightly back",
         swingType: "Full Swing",
         color: "#1a4a8a",
         tips: [
             "Tee low or hit from the fairway",
             "Sweep through — think 'brush the grass'",
             "Full shoulder turn for max distance",
-            "Stay centered through the swing, don't sway"
+            "Stay centered — don't sway"
         ]
     },
     {
         name: "5-Wood",
         range: [145, 159],
         ballPos: 0.22,
+        ballPosLabel: "Forward of center",
         stanceWidth: "wide",
+        weight: 0.48,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#1e5fa0",
         tips: [
@@ -266,7 +275,10 @@ const clubs = [
         name: "4-Hybrid",
         range: [130, 144],
         ballPos: 0.27,
+        ballPosLabel: "Just forward of center",
         stanceWidth: "medium",
+        weight: 0.5,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#1a5fa0",
         tips: [
@@ -280,7 +292,10 @@ const clubs = [
         name: "5-Iron",
         range: [115, 129],
         ballPos: 0.32,
+        ballPosLabel: "Forward of center",
         stanceWidth: "medium",
+        weight: 0.5,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#14472d",
         tips: [
@@ -294,7 +309,10 @@ const clubs = [
         name: "6-Iron",
         range: [105, 114],
         ballPos: 0.4,
+        ballPosLabel: "Just forward of center",
         stanceWidth: "medium",
+        weight: 0.5,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#1a5c38",
         tips: [
@@ -308,7 +326,10 @@ const clubs = [
         name: "7-Iron",
         range: [90, 104],
         ballPos: 0.5,
+        ballPosLabel: "Center of stance",
         stanceWidth: "medium",
+        weight: 0.5,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#2e7d52",
         tips: [
@@ -322,7 +343,10 @@ const clubs = [
         name: "8-Iron",
         range: [80, 89],
         ballPos: 0.56,
+        ballPosLabel: "Just back of center",
         stanceWidth: "medium",
+        weight: 0.52,
+        weightLabel: "Even — 50 / 50",
         swingType: "Full Swing",
         color: "#388e5c",
         tips: [
@@ -336,7 +360,10 @@ const clubs = [
         name: "9-Iron",
         range: [70, 79],
         ballPos: 0.62,
+        ballPosLabel: "Center to slightly back",
         stanceWidth: "medium-narrow",
+        weight: 0.55,
+        weightLabel: "55% front foot",
         swingType: "Full Swing",
         color: "#4caf70",
         tips: [
@@ -350,7 +377,10 @@ const clubs = [
         name: "Pitching Wedge",
         range: [55, 69],
         ballPos: 0.66,
+        ballPosLabel: "Center-back of stance",
         stanceWidth: "narrow",
+        weight: 0.58,
+        weightLabel: "60% front foot",
         swingType: "3/4 Swing",
         color: "#e67e22",
         tips: [
@@ -364,7 +394,10 @@ const clubs = [
         name: "Gap Wedge",
         range: [45, 54],
         ballPos: 0.68,
+        ballPosLabel: "Center-back of stance",
         stanceWidth: "narrow",
+        weight: 0.60,
+        weightLabel: "60% front foot",
         swingType: "Half Swing",
         color: "#d35400",
         tips: [
@@ -378,7 +411,10 @@ const clubs = [
         name: "Sand Wedge",
         range: [30, 44],
         ballPos: 0.55,
+        ballPosLabel: "Center of stance",
         stanceWidth: "narrow",
+        weight: 0.55,
+        weightLabel: "55% front foot",
         swingType: "Chip / Half Swing",
         color: "#b03a2e",
         tips: [
@@ -392,7 +428,10 @@ const clubs = [
         name: "Lob Wedge",
         range: [0, 29],
         ballPos: 0.33,
+        ballPosLabel: "Forward in stance",
         stanceWidth: "narrow",
+        weight: 0.5,
+        weightLabel: "Even — 50 / 50",
         swingType: "Chip / Flop Shot",
         color: "#7b241c",
         tips: [
@@ -404,75 +443,104 @@ const clubs = [
     }
 ];
 
+/* ── Helpers ── */
 function stanceFeet(sw) {
-    if (sw === 'wide') return [42, 218];
-    if (sw === 'medium') return [58, 202];
-    if (sw === 'medium-narrow') return [72, 188];
-    return [86, 174]; // narrow
+    if (sw === 'wide')          return [42, 218];
+    if (sw === 'medium')        return [60, 200];
+    if (sw === 'medium-narrow') return [74, 186];
+    return [88, 172]; // narrow
 }
 
+/* ── Top-down stance diagram ── */
 function stanceSVG(ballPos, stanceWidth) {
     const [lx, rx] = stanceFeet(stanceWidth);
     const bx = Math.round(lx + ballPos * (rx - lx));
-    const cy = 130;
-    const cx = 130;
+    const cy = 126, cx = 130;
 
-    return `<svg viewBox="0 0 260 190" xmlns="http://www.w3.org/2000/svg">
+    return `<svg viewBox="0 0 260 182" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#1a5c38"/>
+    <marker id="tarr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0,8 3,0 6" fill="#1a5c38"/>
     </marker>
   </defs>
-  <line x1="${cx}" y1="76" x2="${cx}" y2="18" stroke="#1a5c38" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="${cx}" y1="72" x2="${cx}" y2="18" stroke="#1a5c38" stroke-width="2.5" marker-end="url(#tarr)"/>
   <text x="${cx}" y="13" text-anchor="middle" font-size="12" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">TARGET</text>
-  <line x1="20" y1="${cy}" x2="240" y2="${cy}" stroke="#d0d0d0" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <line x1="18" y1="${cy}" x2="242" y2="${cy}" stroke="#d0d0d0" stroke-width="1.5" stroke-dasharray="5,4"/>
   <ellipse cx="${lx}" cy="${cy}" rx="24" ry="12" fill="#5D4037" opacity="0.88"/>
-  <text x="${lx}" y="${cy + 28}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">FRONT</text>
+  <text x="${lx}" y="${cy+26}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">FRONT</text>
   <ellipse cx="${rx}" cy="${cy}" rx="24" ry="12" fill="#5D4037" opacity="0.88"/>
-  <text x="${rx}" y="${cy + 28}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">BACK</text>
-  <line x1="${bx}" y1="${cy - 24}" x2="${bx}" y2="${cy - 14}" stroke="#888" stroke-width="1.5" stroke-dasharray="3,2"/>
-  <circle cx="${bx}" cy="${cy - 34}" r="13" fill="white" stroke="#222" stroke-width="2.5"/>
-  <circle cx="${bx}" cy="${cy - 34}" r="4" fill="#ccc" opacity="0.5"/>
-  <text x="${bx}" y="${cy - 54}" text-anchor="middle" font-size="11" fill="#333" font-family="-apple-system,sans-serif" font-weight="700">BALL</text>
-  <text x="${cx}" y="180" text-anchor="middle" font-size="12" fill="#888" font-family="-apple-system,sans-serif">Stance: ${stanceWidth.replace('-', ' ')}</text>
+  <text x="${rx}" y="${cy+26}" text-anchor="middle" font-size="11" fill="#555" font-family="-apple-system,sans-serif" font-weight="700">BACK</text>
+  <line x1="${bx}" y1="${cy-24}" x2="${bx}" y2="${cy-15}" stroke="#888" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <circle cx="${bx}" cy="${cy-34}" r="13" fill="white" stroke="#222" stroke-width="2.5"/>
+  <circle cx="${bx}" cy="${cy-34}" r="4" fill="#bbb"/>
+  <text x="${bx}" y="${cy-52}" text-anchor="middle" font-size="11" fill="#333" font-family="-apple-system,sans-serif" font-weight="700">BALL</text>
 </svg>`;
 }
 
-function golferSVG(ballPos, swingType) {
-    const bx = Math.round(68 + (1 - ballPos) * 80);
-    const groundY = 182;
-    const hipX = 128, hipY = 148;
-    const shoulderX = 122, shoulderY = 102;
-    const handX = 110, handY = 128;
+/* ── Setup-at-a-glance infographic ── */
+function setupSVG(ballPos, ballPosLabel, stanceWidth, weight, weightLabel) {
+    const [lx, rx] = stanceFeet(stanceWidth);
+    const TRACK_L = 14, TRACK_W = 232;
+    const ballX   = Math.round(TRACK_L + ballPos * TRACK_W);
+    const weightX = Math.round(TRACK_L + weight  * TRACK_W);
+    const cx = 130;
 
-    let posLabel = ballPos < 0.4 ? '← Forward in stance' :
-                   ballPos > 0.6 ? 'Back in stance →' : 'Center of stance';
+    const stanceLabels = {
+        'wide':          'Wider than shoulder width',
+        'medium':        'Shoulder width',
+        'medium-narrow': 'Slightly inside shoulder width',
+        'narrow':        'Narrow — inside shoulder width'
+    };
+    const swLabel = stanceLabels[stanceWidth] || stanceWidth;
 
-    return `<svg viewBox="0 0 260 218" xmlns="http://www.w3.org/2000/svg">
-  <rect x="0" y="${groundY}" width="260" height="8" fill="#7cb87c" opacity="0.35"/>
-  <line x1="10" y1="${groundY}" x2="250" y2="${groundY}" stroke="#5a9a5a" stroke-width="2.5"/>
-  <circle cx="${bx}" cy="${groundY - 7}" r="9" fill="white" stroke="#222" stroke-width="2"/>
-  <line x1="${handX}" y1="${handY}" x2="${bx + 2}" y2="${groundY - 6}" stroke="#8B6914" stroke-width="4.5" stroke-linecap="round"/>
-  <line x1="${hipX}" y1="${hipY}" x2="${hipX + 14}" y2="${groundY}" stroke="#1e3a5f" stroke-width="8" stroke-linecap="round"/>
-  <line x1="${hipX}" y1="${hipY}" x2="${hipX - 14}" y2="${groundY}" stroke="#1e3a5f" stroke-width="8" stroke-linecap="round"/>
-  <line x1="${hipX}" y1="${hipY}" x2="${shoulderX}" y2="${shoulderY}" stroke="#1e3a5f" stroke-width="9" stroke-linecap="round"/>
-  <line x1="${shoulderX}" y1="${shoulderY + 8}" x2="${handX}" y2="${handY}" stroke="#1e3a5f" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="${shoulderX - 1}" cy="87" r="16" fill="#fdbcb4"/>
-  <ellipse cx="${shoulderX - 1}" cy="75" rx="19" ry="7.5" fill="#14472d"/>
-  <rect x="${shoulderX - 20}" y="73" width="38" height="7" rx="3" fill="#14472d"/>
-  <rect x="${shoulderX + 18}" y="73" width="10" height="5" rx="2" fill="#14472d"/>
-  <text x="${bx}" y="${groundY + 18}" text-anchor="middle" font-size="11" fill="#1a5c38" font-family="-apple-system,sans-serif" font-weight="700">${posLabel}</text>
-  <text x="230" y="60" text-anchor="end" font-size="11" fill="#888" font-family="-apple-system,sans-serif">${swingType}</text>
+    /* keep label text on screen for extreme positions */
+    const bLabelAnchor = ballX < 80 ? 'start' : ballX > 180 ? 'end' : 'middle';
+    const bLabelX      = ballX < 80 ? TRACK_L : ballX > 180 ? TRACK_L + TRACK_W : ballX;
+    const wLabelAnchor = weightX < 80 ? 'start' : weightX > 180 ? 'end' : 'middle';
+    const wLabelX      = weightX < 80 ? TRACK_L : weightX > 180 ? TRACK_L + TRACK_W : weightX;
+
+    return `<svg viewBox="0 0 260 248" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- ① BALL POSITION -->
+  <text x="14" y="19" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">BALL POSITION</text>
+  <text x="14"  y="36" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Front foot</text>
+  <text x="246" y="36" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Back foot</text>
+  <rect  x="${TRACK_L}" y="42" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
+  <rect  x="${TRACK_L}" y="42" width="${ballPos * TRACK_W}" height="10" rx="5" fill="#1a5c38" opacity="0.22"/>
+  <circle cx="${ballX}" cy="47" r="15" fill="white" stroke="#1a5c38" stroke-width="3"/>
+  <circle cx="${ballX}" cy="47" r="6"  fill="#1a5c38"/>
+  <text x="${bLabelX}" y="74" text-anchor="${bLabelAnchor}" font-size="13" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">${ballPosLabel}</text>
+
+  <!-- ② STANCE WIDTH -->
+  <text x="14" y="100" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">STANCE WIDTH</text>
+  <ellipse cx="${lx}" cy="122" rx="22" ry="11" fill="#5D4037" opacity="0.85"/>
+  <text x="${lx}" y="140" text-anchor="middle" font-size="10" fill="#777" font-family="-apple-system,sans-serif" font-weight="700">FRONT</text>
+  <ellipse cx="${rx}" cy="122" rx="22" ry="11" fill="#5D4037" opacity="0.85"/>
+  <text x="${rx}" y="140" text-anchor="middle" font-size="10" fill="#777" font-family="-apple-system,sans-serif" font-weight="700">BACK</text>
+  <line x1="${lx+24}" y1="150" x2="${rx-24}" y2="150" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="${lx+24}" y1="146" x2="${lx+24}" y2="154" stroke="#bbb" stroke-width="1.5"/>
+  <line x1="${rx-24}" y1="146" x2="${rx-24}" y2="154" stroke="#bbb" stroke-width="1.5"/>
+  <text x="${cx}" y="168" text-anchor="middle" font-size="13" fill="#444" font-family="-apple-system,sans-serif">${swLabel}</text>
+
+  <!-- ③ WEIGHT DISTRIBUTION -->
+  <text x="14" y="194" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">WEIGHT DISTRIBUTION</text>
+  <text x="14"  y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Back foot</text>
+  <text x="246" y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Front foot</text>
+  <rect  x="${TRACK_L}" y="216" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
+  <circle cx="${weightX}" cy="221" r="15" fill="white" stroke="#e06820" stroke-width="3"/>
+  <circle cx="${weightX}" cy="221" r="6"  fill="#e06820"/>
+  <text x="${wLabelX}" y="248" text-anchor="${wLabelAnchor}" font-size="13" fill="#e06820" font-weight="700" font-family="-apple-system,sans-serif">${weightLabel}</text>
 </svg>`;
 }
 
+/* ── Main logic ── */
 function findClub() {
-    const val = parseInt(document.getElementById('distanceInput').value, 10);
-    const card = document.getElementById('resultCard');
+    const val   = parseInt(document.getElementById('distanceInput').value, 10);
+    const card  = document.getElementById('resultCard');
     const noRes = document.getElementById('noResult');
 
     noRes.style.display = 'none';
-    card.style.display = 'none';
+    card.style.display  = 'none';
 
     if (!val || isNaN(val) || val < 1 || val > 300) {
         noRes.style.display = 'block';
@@ -483,26 +551,26 @@ function findClub() {
     if (!club) { noRes.style.display = 'block'; return; }
 
     const tips = club.tips.map(t =>
-        `<div class="tip-row"><div class="tip-check">✓</div><span>${t}</span></div>`
+        `<div class="tip-row"><div class="tip-check">&#10003;</div><span>${t}</span></div>`
     ).join('');
 
     const rangeLabel = club.range[0] === 0
-        ? `Under 30 yards`
-        : `${club.range[0]}–${club.range[1]} yard range`;
+        ? 'Under 30 yards'
+        : `${club.range[0]}&ndash;${club.range[1]} yard range`;
 
     card.innerHTML = `
-        <div class="club-banner" style="background:linear-gradient(135deg,${club.color}dd,${club.color});">
+        <div class="club-banner" style="background:linear-gradient(135deg,${club.color}ee,${club.color});">
             <div class="club-distance-label">${val} yds &rarr; ${rangeLabel}</div>
             <div class="club-name">${club.name}</div>
             <div class="swing-badge">${club.swingType}</div>
         </div>
         <div class="panel">
-            <div class="panel-title">Stance &amp; Ball Position — Top View</div>
+            <div class="panel-title">Stance &amp; Ball Position &mdash; Top View</div>
             <div class="svg-wrap">${stanceSVG(club.ballPos, club.stanceWidth)}</div>
         </div>
         <div class="panel">
-            <div class="panel-title">Address Setup — Side View</div>
-            <div class="svg-wrap">${golferSVG(club.ballPos, club.swingType)}</div>
+            <div class="panel-title">Setup at a Glance</div>
+            <div class="svg-wrap">${setupSVG(club.ballPos, club.ballPosLabel, club.stanceWidth, club.weight, club.weightLabel)}</div>
         </div>
         <div class="panel">
             <div class="panel-title">Setup Tips</div>
