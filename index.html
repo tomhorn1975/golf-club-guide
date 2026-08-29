@@ -443,37 +443,18 @@ const clubs = [
     }
 ];
 
-/* ── Helpers ── */
-function stanceFeet(sw) {
-    if (sw === 'wide')          return [42, 218];
-    if (sw === 'medium')        return [60, 200];
-    if (sw === 'medium-narrow') return [74, 186];
-    return [88, 172]; // narrow
-}
-
 /* ── Setup-at-a-glance infographic ── */
-function setupSVG(ballPos, ballPosLabel, stanceWidth, weight, weightLabel) {
-    const [lx, rx] = stanceFeet(stanceWidth);
+function setupSVG(ballPos, ballPosLabel, weight, weightLabel) {
     const TRACK_L = 14, TRACK_W = 232;
     const ballX   = Math.round(TRACK_L + ballPos * TRACK_W);
     const weightX = Math.round(TRACK_L + weight  * TRACK_W);
-    const cx = 130;
 
-    const stanceLabels = {
-        'wide':          'Wider than shoulder width',
-        'medium':        'Shoulder width',
-        'medium-narrow': 'Slightly inside shoulder width',
-        'narrow':        'Narrow — inside shoulder width'
-    };
-    const swLabel = stanceLabels[stanceWidth] || stanceWidth;
-
-    /* keep label text on screen for extreme positions */
     const bLabelAnchor = ballX < 80 ? 'start' : ballX > 180 ? 'end' : 'middle';
     const bLabelX      = ballX < 80 ? TRACK_L : ballX > 180 ? TRACK_L + TRACK_W : ballX;
     const wLabelAnchor = weightX < 80 ? 'start' : weightX > 180 ? 'end' : 'middle';
     const wLabelX      = weightX < 80 ? TRACK_L : weightX > 180 ? TRACK_L + TRACK_W : weightX;
 
-    return `<svg viewBox="0 0 260 248" xmlns="http://www.w3.org/2000/svg">
+    return `<svg viewBox="0 0 260 158" xmlns="http://www.w3.org/2000/svg">
 
   <!-- ① BALL POSITION -->
   <text x="14" y="19" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">BALL POSITION</text>
@@ -485,25 +466,14 @@ function setupSVG(ballPos, ballPosLabel, stanceWidth, weight, weightLabel) {
   <circle cx="${ballX}" cy="47" r="6"  fill="#1a5c38"/>
   <text x="${bLabelX}" y="74" text-anchor="${bLabelAnchor}" font-size="13" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">${ballPosLabel}</text>
 
-  <!-- ② STANCE WIDTH -->
-  <text x="14" y="100" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">STANCE WIDTH</text>
-  <ellipse cx="${lx}" cy="122" rx="22" ry="11" fill="#5D4037" opacity="0.85"/>
-  <text x="${lx}" y="140" text-anchor="middle" font-size="10" fill="#777" font-family="-apple-system,sans-serif" font-weight="700">FRONT</text>
-  <ellipse cx="${rx}" cy="122" rx="22" ry="11" fill="#5D4037" opacity="0.85"/>
-  <text x="${rx}" y="140" text-anchor="middle" font-size="10" fill="#777" font-family="-apple-system,sans-serif" font-weight="700">BACK</text>
-  <line x1="${lx+24}" y1="150" x2="${rx-24}" y2="150" stroke="#bbb" stroke-width="1.5"/>
-  <line x1="${lx+24}" y1="146" x2="${lx+24}" y2="154" stroke="#bbb" stroke-width="1.5"/>
-  <line x1="${rx-24}" y1="146" x2="${rx-24}" y2="154" stroke="#bbb" stroke-width="1.5"/>
-  <text x="${cx}" y="168" text-anchor="middle" font-size="13" fill="#444" font-family="-apple-system,sans-serif">${swLabel}</text>
-
-  <!-- ③ WEIGHT DISTRIBUTION -->
-  <text x="14" y="194" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">WEIGHT DISTRIBUTION</text>
-  <text x="14"  y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Back foot</text>
-  <text x="246" y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Front foot</text>
-  <rect  x="${TRACK_L}" y="216" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
-  <circle cx="${weightX}" cy="221" r="15" fill="white" stroke="#e06820" stroke-width="3"/>
-  <circle cx="${weightX}" cy="221" r="6"  fill="#e06820"/>
-  <text x="${wLabelX}" y="248" text-anchor="${wLabelAnchor}" font-size="13" fill="#e06820" font-weight="700" font-family="-apple-system,sans-serif">${weightLabel}</text>
+  <!-- ② WEIGHT DISTRIBUTION -->
+  <text x="14" y="100" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">WEIGHT DISTRIBUTION</text>
+  <text x="14"  y="116" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Back foot</text>
+  <text x="246" y="116" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Front foot</text>
+  <rect  x="${TRACK_L}" y="122" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
+  <circle cx="${weightX}" cy="127" r="15" fill="white" stroke="#e06820" stroke-width="3"/>
+  <circle cx="${weightX}" cy="127" r="6"  fill="#e06820"/>
+  <text x="${wLabelX}" y="154" text-anchor="${wLabelAnchor}" font-size="13" fill="#e06820" font-weight="700" font-family="-apple-system,sans-serif">${weightLabel}</text>
 </svg>`;
 }
 
@@ -540,7 +510,7 @@ function findClub() {
         </div>
         <div class="panel">
             <div class="panel-title">Setup at a Glance</div>
-            <div class="svg-wrap">${setupSVG(club.ballPos, club.ballPosLabel, club.stanceWidth, club.weight, club.weightLabel)}</div>
+            <div class="svg-wrap">${setupSVG(club.ballPos, club.ballPosLabel, club.weight, club.weightLabel)}</div>
         </div>
         <div class="panel">
             <div class="panel-title">Setup Tips</div>
