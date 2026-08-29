@@ -444,36 +444,56 @@ const clubs = [
 ];
 
 /* ── Setup-at-a-glance infographic ── */
-function setupSVG(ballPos, ballPosLabel, weight, weightLabel) {
+function setupSVG(ballPos, ballPosLabel, stanceWidth, weight, weightLabel) {
     const TRACK_L = 14, TRACK_W = 232;
     const ballX   = Math.round(TRACK_L + ballPos * TRACK_W);
     const weightX = Math.round(TRACK_L + weight  * TRACK_W);
 
-    const bLabelAnchor = ballX < 80 ? 'start' : ballX > 180 ? 'end' : 'middle';
-    const bLabelX      = ballX < 80 ? TRACK_L : ballX > 180 ? TRACK_L + TRACK_W : ballX;
-    const wLabelAnchor = weightX < 80 ? 'start' : weightX > 180 ? 'end' : 'middle';
-    const wLabelX      = weightX < 80 ? TRACK_L : weightX > 180 ? TRACK_L + TRACK_W : weightX;
+    const stancePos = { 'narrow': 0.15, 'medium-narrow': 0.38, 'medium': 0.55, 'wide': 0.82 };
+    const stanceLabels = {
+        'narrow':        'Inside shoulder width — feet close',
+        'medium-narrow': 'Slightly inside shoulder width',
+        'medium':        'Shoulder width',
+        'wide':          'Wider than shoulder width'
+    };
+    const stanceX  = Math.round(TRACK_L + (stancePos[stanceWidth] || 0.55) * TRACK_W);
+    const shoulderX = Math.round(TRACK_L + 0.55 * TRACK_W); // reference mark
+    const swLabel  = stanceLabels[stanceWidth] || stanceWidth;
 
-    return `<svg viewBox="0 0 260 158" xmlns="http://www.w3.org/2000/svg">
+    const anchor = x => x < 80 ? 'start' : x > 180 ? 'end' : 'middle';
+    const lx     = x => x < 80 ? TRACK_L : x > 180 ? TRACK_L + TRACK_W : x;
+
+    return `<svg viewBox="0 0 260 248" xmlns="http://www.w3.org/2000/svg">
 
   <!-- ① BALL POSITION -->
   <text x="14" y="19" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">BALL POSITION</text>
   <text x="14"  y="36" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Front foot</text>
   <text x="246" y="36" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Back foot</text>
   <rect  x="${TRACK_L}" y="42" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
-  <rect  x="${TRACK_L}" y="42" width="${ballPos * TRACK_W}" height="10" rx="5" fill="#1a5c38" opacity="0.22"/>
+  <rect  x="${TRACK_L}" y="42" width="${Math.round(ballPos * TRACK_W)}" height="10" rx="5" fill="#1a5c38" opacity="0.22"/>
   <circle cx="${ballX}" cy="47" r="15" fill="white" stroke="#1a5c38" stroke-width="3"/>
   <circle cx="${ballX}" cy="47" r="6"  fill="#1a5c38"/>
-  <text x="${bLabelX}" y="74" text-anchor="${bLabelAnchor}" font-size="13" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">${ballPosLabel}</text>
+  <text x="${lx(ballX)}" y="74" text-anchor="${anchor(ballX)}" font-size="13" fill="#1a5c38" font-weight="700" font-family="-apple-system,sans-serif">${ballPosLabel}</text>
 
-  <!-- ② WEIGHT DISTRIBUTION -->
-  <text x="14" y="100" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">WEIGHT DISTRIBUTION</text>
-  <text x="14"  y="116" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Back foot</text>
-  <text x="246" y="116" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Front foot</text>
-  <rect  x="${TRACK_L}" y="122" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
-  <circle cx="${weightX}" cy="127" r="15" fill="white" stroke="#e06820" stroke-width="3"/>
-  <circle cx="${weightX}" cy="127" r="6"  fill="#e06820"/>
-  <text x="${wLabelX}" y="154" text-anchor="${wLabelAnchor}" font-size="13" fill="#e06820" font-weight="700" font-family="-apple-system,sans-serif">${weightLabel}</text>
+  <!-- ② STANCE WIDTH -->
+  <text x="14" y="100" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">STANCE WIDTH</text>
+  <text x="14"  y="117" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Narrow</text>
+  <text x="246" y="117" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Wide</text>
+  <rect  x="${TRACK_L}" y="123" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
+  <line x1="${shoulderX}" y1="119" x2="${shoulderX}" y2="137" stroke="#aaa" stroke-width="2" stroke-dasharray="3,2"/>
+  <text x="${shoulderX}" y="148" text-anchor="middle" font-size="10" fill="#aaa" font-family="-apple-system,sans-serif">Shoulders</text>
+  <circle cx="${stanceX}" cy="128" r="15" fill="white" stroke="#5b2d8e" stroke-width="3"/>
+  <circle cx="${stanceX}" cy="128" r="6"  fill="#5b2d8e"/>
+  <text x="${lx(stanceX)}" y="168" text-anchor="${anchor(stanceX)}" font-size="13" fill="#5b2d8e" font-weight="700" font-family="-apple-system,sans-serif">${swLabel}</text>
+
+  <!-- ③ WEIGHT DISTRIBUTION -->
+  <text x="14" y="194" font-size="10" font-weight="800" fill="#aaa" font-family="-apple-system,sans-serif" letter-spacing="1.5">WEIGHT DISTRIBUTION</text>
+  <text x="14"  y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif">Back foot</text>
+  <text x="246" y="210" font-size="12" fill="#666" font-family="-apple-system,sans-serif" text-anchor="end">Front foot</text>
+  <rect  x="${TRACK_L}" y="216" width="${TRACK_W}" height="10" rx="5" fill="#e0e0e0"/>
+  <circle cx="${weightX}" cy="221" r="15" fill="white" stroke="#e06820" stroke-width="3"/>
+  <circle cx="${weightX}" cy="221" r="6"  fill="#e06820"/>
+  <text x="${lx(weightX)}" y="248" text-anchor="${anchor(weightX)}" font-size="13" fill="#e06820" font-weight="700" font-family="-apple-system,sans-serif">${weightLabel}</text>
 </svg>`;
 }
 
@@ -510,7 +530,7 @@ function findClub() {
         </div>
         <div class="panel">
             <div class="panel-title">Setup at a Glance</div>
-            <div class="svg-wrap">${setupSVG(club.ballPos, club.ballPosLabel, club.weight, club.weightLabel)}</div>
+            <div class="svg-wrap">${setupSVG(club.ballPos, club.ballPosLabel, club.stanceWidth, club.weight, club.weightLabel)}</div>
         </div>
         <div class="panel">
             <div class="panel-title">Setup Tips</div>
